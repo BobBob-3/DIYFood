@@ -1,5 +1,6 @@
 <template>
-<!-- MENU BAR -->
+<div>
+  <!-- MENU BAR -->
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -22,15 +23,17 @@
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/mealplan">Meal Plan</a></li>
                 <li class="nav-item"><a class="nav-link" href="/recipe">Recipe</a></li>
-                <li class="nav-item"><a class="nav-link" href="#Groceries">Grocery Price</a></li>
-                <li class="nav-item"><a class="nav-link" href="#Trend">Price Trend</a></li>
-                <li class="nav-item"><a class="nav-link" href="#MyPage">My Page</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#Groceries">Grocery Price</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#Trend">Price Trend</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#MyPage">My Page</a></li>
             </ul>
         </div>
       </div>
     </nav>
   </body>
-<router-view/>
+<router-view></router-view>
+</div>
+
 </template>
 
 <script>

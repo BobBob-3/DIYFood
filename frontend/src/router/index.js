@@ -38,6 +38,22 @@ const routes = [
       import(
         /* webpackChunkName: "event", webpackPrefetch:true */ '../views/2_recipe/RecipeView.vue'
       )
+  },
+  {
+    path: '/login',
+    name: 'LogInPage',
+    component: () =>
+      import(
+        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/5_mypage/LogInView.vue'
+      )
+  },
+  {
+    path: '/signup',
+    name: 'SignUpPage',
+    component: () =>
+      import(
+        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/5_mypage/SignUpView.vue'
+      )
   }
 ]
 

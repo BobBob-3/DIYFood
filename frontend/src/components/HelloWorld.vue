@@ -126,8 +126,8 @@
               <form id="MyPageForm">
                   <div class="row align-items-stretch mb-5">
                       <div class="text-center">
-                          <button class="btn btn-primary btn-xl text-uppercase" type="button" onclick="location.href='signin.html'">Log In</button>
-                          <button class="btn btn-primary btn-xl text-uppercase" type="button" onclick="location.href='signup.html'">Sign Up</button>
+                          <button class="btn btn-primary btn-xl text-uppercase" type="button" onclick="location.href='/login'">Log In</button>
+                          <button class="btn btn-primary btn-xl text-uppercase" type="button" onclick="location.href='/signup'">Sign Up</button>
                       </div>
                   </div>
               </form>

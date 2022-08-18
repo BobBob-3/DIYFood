@@ -13,7 +13,7 @@
     <!-- Side -->
     <aside id="side">
       <div style="text-align: center;">
-        <img src="@/assets/check-list.png" alt="식단계획1" height="200" width="200" >
+        <img src="@/assets/harvest.png" alt="식단계획2" height="200" width="200" >
       </div>
       <div style="margin-top: 30px; text-align: center;">
         <h3>2. 재료 선택</h3>
@@ -25,6 +25,7 @@
         <input type="button" class="next-button" value="NEXT" onClick="location.href='/mealplan/step2'">
       </div>
     </section>
+    {{ numberOfMeals }}
   </div>
 </body>
 
