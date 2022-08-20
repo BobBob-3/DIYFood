@@ -2158,6 +2158,7 @@ progress {
 }
 .form-label {
   margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .col-form-label {
@@ -4520,6 +4521,7 @@ textarea.form-control-lg {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  box-shadow: 3px 3px 3px 3px lightgrey;
 }
 .card > hr {
   margin-right: 0;
@@ -11829,11 +11831,26 @@ section#MyPage form#MyPageForm :-ms-input-placeholder {
   padding-bottom: 10px;
   text-align: left;
 }
+#content-signup{
+  float: left;
+  width: fit-content;
+  height:fit-content ;
+  background-color:white;
+  margin-right: 50px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px 5px lightgray;
+  padding: 50px;
+  padding-bottom: 10px;
+  text-align: left;
+}
 .margin_left {
   margin-left: 20px;
 }
 .input_box {
-  width: 250px;
+  height: 50px;
+  width: 500px;
   border:slategray;
   border-radius: 5px;
   box-shadow:1px 1px 1px 1px lightgrey;
