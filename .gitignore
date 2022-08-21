@@ -1,1 +1,4 @@
 backend/routes/config.json
+node_modules/
+dist/*
+*.log

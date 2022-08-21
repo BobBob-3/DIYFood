@@ -1,27 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var mysql = require('mysql');
+const express = require('express');
+const connection = require('../mysql/mysql_connection')
+const router = express.Router();
 
-//DB 연결
-const port = 3306;
-var options = require('./option');
- 
-var loginData = {
-        host: options.storageConfig.HOST,
-        user: options.storageConfig.user,
-        password: options.storageConfig.password                                                         
-};
- 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host: loginData.host,
-  port:3306,
-  user:loginData.user,
-  password:loginData.password,
-  database:'octodog'
-})
-connection.connect();
-
+//app.use('/api',api);
 // user create
 // CREATE TABLE user ( 
 //   id int NOT NULL auto_increment PRIMARY KEY,
@@ -34,7 +15,7 @@ connection.connect();
 router.get('/', function(req, res, next) {
   connection.query('SELECT * from user', function (error, results, fields) {
     if (error) console.log(error);
-    res.send(results);
+    console.log(results);
 });
 });
 
