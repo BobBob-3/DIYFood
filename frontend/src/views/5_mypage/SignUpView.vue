@@ -16,7 +16,7 @@
                         <label class="form-label" for="id">이메일</label>
                         <div>
                           <input type="email" id="id" class="form-control" style="width:75%; display:inline-block;" placeholder="Email" v-model="user.userid" required />
-                          <input type="button" class="btn btn-primary" value="중복확인" style="float:right; margin: 0px;" required>
+                          <input type="button" class="btn btn-primary" value="중복확인" style="float:right; margin: 0px;" @click="IdCheck()" required>
                         </div>
                       </div>
                     </div>
@@ -38,7 +38,7 @@
                       <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0 input_row">
                         <label class="form-label" for="password1">비밀번호 확인</label>
-                        <input type="password" id="password1" class="form-control" placeholder="Password Repeat" v-model="user.password1" required/>
+                        <input type="password" id="password1" class="form-control" placeholder="Password Repeat" v-model="user.password1" @blur="passwordConfirm()" required/>
                       </div>
                     </div>
                     <div class="form-check d-flex justify-content-center mb-5">
@@ -48,7 +48,7 @@
                       </label>
                     </div>
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button class="btn btn-primary btn-lg" @click="[passwordConfirm(), signUp()]">가입하기</button>
+                      <button class="btn btn-primary btn-lg" @click="submitForm()">가입하기</button>
                     </div>
                   </div>
                 </form>
@@ -69,16 +69,17 @@
 
 </template>
 <script>
+import { registerUser } from '@/api/index';
+ 
 export default {
   components: {},
   data: function () {
   return {
     nowDate:'',
     user: {
-      userid: '',
-      name: '',
-      password: '',
-      password1: '',
+      userid: null,
+      name: null,
+      password: null
     }
   }
 },
@@ -91,37 +92,60 @@ export default {
   },1000)},
   unmounted() {},
   methods: {
+  // 회원가입 submit
+  async submitForm() {
+    // API 요청시 전달할 userData 객체
+    const userData = {
+      username: this.user.userid,
+      password: this.user.password,
+      name: this.user.name,
+    };
+    const { data } = await registerUser(userData);
+    
+    this.logMessage = `${data.username} 님이 가입되었습니다.`;
+    
+    // 가입 후 폼 초기화
+    this.initForm();
+  },
+  initForm() {
+    this.username = '';
+    this.password = '';
+    this.nickname = '';
+  },
+  // 비밀번호 확인
   passwordConfirm: function() {
     if(this.user.password != this.user.password1) {
       alert("비밀번호가 일치하지 않습니다.")
     }
   },
-
-  signUp: function () {
-    this.$http.post('/user/signup', { 
-      user: this.user,
-      signUpDate: this.nowDate
-    })
-    .then((res) => {
-      if (res.data.success == true) {
-        alert(res.data.message);
-        this.$router.push('/login') 
-      }
-      if (res.data.success == false) {
-        alert(res.data.message);
-      }
-    })
-    .catch(function () {
-      alert('error')
-    })
-  },
-
+  // 현재 날짜
   setNowTimes() {
     let myDate = new Date() 
     let yy = String(myDate.getFullYear())  
     let mm = myDate.getMonth() + 1  
     let dd = String(myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate())
     this.nowDate = yy + '-' + mm + '-' + dd
+  },
+  // 아이디 중복확인
+  async IdCheck(){
+    
+    console.log('SignUpView.vue => IdCheck');
+    console.log('SignUpView.vue => IdCheck', this.user.userid);
+
+    const url = `/user/checkemail?uid=${this.user.userid}`;
+    const headers = {"Content-Type":"application/json"};
+    const response = await this.axios.get(url, {headers:headers});
+    console.log(response);
+
+    if(response.data.result === 1){
+        alert('중복된 아이디가 존재합니다.')
+        this.$refs.user.userid.focus();
+        return false;
+    }
+    if(response.data.result === 0){
+        alert('사용가능한 아이디입니다')
+        this.$refs.user.password.focus();
+    }    
   }
 }
 }
