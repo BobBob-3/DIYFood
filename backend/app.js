@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path = require('path');
+const nunjucks = require('nunjucks');
 const session = require('express-session');
 const passport = require('passport');
 const dotenv = require('dotenv');
@@ -21,6 +22,11 @@ const app = express();
 passportConfig(); //패스포트 설정
 app.set('views', path.join(__dirname, 'views')); 
 app.set('view engine', 'ejs');   
+
+nunjucks.configure('views', {
+  express: app,
+  watch: true,
+});
 
 sequelize.sync({force : false})
 .then( ()=>{

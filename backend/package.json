@@ -19,8 +19,10 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
+    "nunjucks": "^3.2.3",
     "request": "^2.88.2",
-    "sequelize": "^6.21.4"
+    "sequelize": "^6.21.4",
+    "sequelize-cli": "^6.4.1"
   },
   "devDependencies": {
     "connect-flash": "^0.1.1",
