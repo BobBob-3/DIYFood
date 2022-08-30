@@ -2,6 +2,10 @@ const Sequelize = require('sequelize');
 module.exports = class recipeNutrient extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
+      foodCode: {
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
       foodName: { 
         type: Sequelize.STRING(100),
         allowNull: false,
@@ -24,6 +28,14 @@ module.exports = class recipeNutrient extends Sequelize.Model {
       },
      foodNat: {
         type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
+      foodImage: { 
+        type: Sequelize.STRING(150),
+        allowNull: false,
+      },
+      foodIngredient: { 
+        type: Sequelize.STRING(300),
         allowNull: false,
       },
     }, {
