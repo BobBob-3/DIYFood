@@ -1,25 +1,21 @@
 <template>
   <body id="page">
     <div>
-      <!-- Head -->
-      <div style="margin-top: 30px; " id="head">
-        <span class="head-text">
-          MEAL PLAN
-        </span>
-        <span class="head-subtext">
-          설정된 예산에 맞춰 건강하고 신선한 식단을 추천합니다.
-        </span>
-      </div>
       <div>
         <!-- Side -->
-        <aside id="side">
-          <div style="text-align: center;">
-            <img src="https://cdn-icons-png.flaticon.com/512/1028/1028496.png" alt="식단계획2" height="75%" width="75%">
+          <div id="side">
+            <div style="margin-top: 30px; " id="head">
+              <h1>
+                MEAL PLAN
+              </h1>
+            </div>
+            <div style="text-align: center;">
+              <img src="https://cdn-icons-png.flaticon.com/512/1028/1028496.png" alt="식단계획2" height="50%" width="50%">
           </div>
           <div style="margin-top: 30px; text-align: center;">
-            <h3>2. 보유 재료 선택</h3>
+            <h4>2. 보유 재료 선택</h4>
+            </div>
           </div>
-        </aside>
         <!-- Content -->
         <section id="content">
           <div style="text-align:center;">

@@ -12,7 +12,7 @@
               <div class="col-md-4">
                   <span class="fa-stack fa-4x">
                       <a href="/mealplan">
-                          <img src="@/assets/meal.png" alt="MealPlan" style="width: 120px; height: 120px;">
+                          <img src="https://cdn-icons-png.flaticon.com/512/561/561611.png" alt="MealPlan" style="width: 120px; height: 120px;">
                       </a>
                   </span>
                   <h4 class="my-3">식단 계획하기</h4>
@@ -41,7 +41,7 @@
                   <div class="col-md-4">
                       <span class="fa-stack fa-4x">
                           <a href="/recipe">
-                              <img src="@/assets/recipe-book.png" alt="MealPlan" style="width: 120px; height: 120px;">
+                              <img src="https://cdn-icons-png.flaticon.com/512/3565/3565418.png" alt="MealPlan" style="width: 120px; height: 120px;">
                           </a>
                       </span>
                       <h4 class="my-3">레시피</h4>
@@ -70,7 +70,7 @@
                   <div class="col-md-4">
                       <span class="fa-stack fa-4x">
                           <a href="/ingredient">
-                              <img src="@/assets/basket.png" alt="ingredient_price" style="width: 120px; height: 120px;">
+                              <img src="https://cdn-icons-png.flaticon.com/512/3362/3362707.png" alt="ingredient_price" style="width: 120px; height: 120px;">
                           </a>
                       </span>
                       <h4 class="my-3">식재료 가격 정보</h4>

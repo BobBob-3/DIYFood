@@ -1,23 +1,19 @@
 <template>
   <body id="page">
     <div>
-      <!-- Head -->
-      <div style="margin-top: 30px; " id="head">
-        <span class="head-text">
-          MEAL PLAN
-        </span>
-        <span class="head-subtext">
-          설정된 예산에 맞춰 건강하고 신선한 식단을 추천합니다.
-        </span>
-      </div>
       <div>
         <!-- Side -->
           <div id="side">
+            <div style="margin-top: 30px; " id="head">
+              <h1>
+              MEAL PLAN
+              </h1>
+            </div>
             <div style="text-align: center;">
-              <img src="@/assets/basket.png" alt="식단계획3" height="75%" width="75%">
+              <img src="https://cdn-icons-png.flaticon.com/512/2906/2906476.png" alt="식단계획3" height="50%" width="50%">
             </div>
             <div style="margin-top: 30px; text-align: center;">
-              <h3>3. 새로운 재료 선택</h3>
+              <h4>3. 새로운 재료 선택</h4>
             </div>
           </div>
         <!-- Content -->
@@ -55,7 +51,7 @@
                   <td>{{data.price}}원</td>
                   <td>
                     <label>
-                      <input type="checkbox" class="form-check-input" @click="selectItem(i)">
+                      <input type="checkbox" class="form-check-input" :value="data.id" v-model="checkedID" @click="selectItem(i)">
                     </label>
                   </td>
                 </tr>
@@ -68,9 +64,9 @@
             </div>
           </div>
           <div id="next-button" style="text-align:center;" >
-            <!-- <a href="/mealplan/step4"> -->
+            <a href="/mealplan/step4">
               <input type="button" class="btn btn-primary btn-lg next-button text-uppercase" value="NEXT" @click="submitItemList()">
-            <!-- </a> -->
+            </a>
           </div>
         </section>
       </div>
@@ -86,10 +82,11 @@ export default {
       checkedItemCode: [],
       checkedItemName: [],
       metaItemList: [],
-      dividedCode: [],
       budget: parseInt(localStorage.getItem('budget')),
       totalCost: 0,
-      finalCodeList: []
+      subCodeList: [],
+      finalCodeList: [],
+      checkedID: []
     }
   },
   setup () {},
@@ -164,8 +161,13 @@ export default {
     },
     codeSplit () {
       for (var i = 0; i < this.checkedItemCode.length; i++) {
-        var splitedCode = this.checkedItemCode[i].split('-')
-        this.finalCodeList.push({ splitedCode })
+        this.subCodeList.push(this.checkedItemCode[i].split('-'))
+        var obj = {
+          itemCode: this.subCodeList[i][0],
+          detailItemCode: this.subCodeList[i][1],
+          price: this.subCodeList[i][2]
+        }
+        this.finalCodeList.push(obj)
       }
       console.log(this.finalCodeList)
     }

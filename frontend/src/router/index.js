@@ -75,6 +75,14 @@ const routes = [
       )
   },
   {
+    path: '/user/mypage',
+    name: 'MyPage',
+    component: () =>
+      import(
+        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/5_mypage/MyPageView.vue'
+      )
+  },
+  {
     path: '/user/login',
     name: 'LogInPage',
     component: () =>
@@ -99,11 +107,11 @@ const routes = [
       )
   },
   {
-    path: '/user/myinfo',
-    name: 'MyInfoPage',
+    path: '/user/myinfo/update',
+    name: 'MyInfoUpdatePage',
     component: () =>
       import(
-        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/5_mypage/MyInfoView.vue'
+        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/5_mypage/MyInfoUpdateView.vue'
       )
   },
   {

@@ -61,57 +61,55 @@
 </section>
 </template>
 <script>
-/* eslint-disable */
-import { registerUser } from '@/api/index';
-
 export default {
   components: {},
   data: function () {
-  return {
-    nowDate:'',
-    user: {
-      userid: null,
-      name: null,
-      password: null
+    return {
+      user: {
+        email: null,
+        name: null,
+        password: null
+      }
     }
-  }
-},
-  setup() {},
-  created() {},
-  mounted () {
-    this.timer = setInterval(() => {    
-    this.setNowTimes()
-    this.passwordConfirm
-  },1000)},
-  unmounted() {},
+  },
+  setup () {},
+  created () {
+    this.getUserData()
+  },
+  mounted () {},
+  unmounted () {},
   methods: {
-    // 회원가입 submit
-    async submitForm() {
-      // API 요청시 전달할 userData 객체
-      const userData = {
-        username: this.user.userid,
-        password: this.user.password,
-        name: this.user.name,
-        date: this.nowDate
-      };
-      const { data } = await registerUser(userData);
-      
-      this.logMessage = `${data.username} 님의 회원정보가 수정되었습니다.`;
+    getUserData () {
+      this.$axios.get('http://localhost:3000/user/info').then(response => {
+        this.user = response.data
+        console.log(this.user)
+      }).catch(error => {
+        console.log(error)
+      })
     },
-    // 비밀번호 확인
-    passwordConfirm: function() {
-      if(this.user.password != this.user.password1) {
-        alert("비밀번호가 일치하지 않습니다.")
+    async submitForm () {
+      if (this.idcheck_code === 1) {
+        // API 요청시 전달할 userData 객체
+        const userData = {
+          email: this.user.email,
+          password: this.user.password,
+          name: this.user.name
+        }
+        const url = 'http://localhost:3000/user/signup'
+        // eslint-disable-next-line
+        const headers = { 'Content-Type': 'application/json' }
+        await this.$axios.post(url, userData)
+        location.href = '/user/signupcompleted'
+      } else {
+        alert('이메일 중복을 확인해주세요')
       }
     },
-    // 현재 날짜
-    setNowTimes() {
-      let myDate = new Date() 
-      let yy = String(myDate.getFullYear())  
-      let mm = myDate.getMonth() + 1  
-      let dd = String(myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate())
-      this.nowDate = yy + '-' + mm + '-' + dd
-    },
+    // 비밀번호 확인
+    passwordConfirm: function () {
+      if (this.user.password !== this.user.password1) {
+        alert('비밀번호가 일치하지 않습니다.')
+      }
+    }
   }
 }
 </script>
