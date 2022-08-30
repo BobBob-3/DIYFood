@@ -103,6 +103,7 @@ export default {
       } else {
         alert('이메일 중복을 확인해주세요')
       }
+      
     },
     // 비밀번호 확인
     passwordConfirm(){

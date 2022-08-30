@@ -107,11 +107,11 @@ const routes = [
       )
   },
   {
-    path: '/user/myinfo/update',
-    name: 'MyInfoUpdatePage',
+    path: '/user/myinfo',
+    name: 'MyInfoPage',
     component: () =>
       import(
-        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/5_mypage/MyInfoUpdateView.vue'
+        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/5_mypage/MyInfoView.vue'
       )
   },
   {

@@ -32,6 +32,16 @@
         </section>
       </a>
     </div>
+    <div style="text-align:center;" >
+      <a href="">
+        <input type="button" class="btn btn-lg next-button text-uppercase" value="로그아웃">
+      </a>
+    </div>
+    <div style="text-align:center;" >
+      <a href="">
+        <input type="button" class="btn btn-lg next-button text-uppercase" value="회원 탈퇴">
+      </a>
+    </div>
   </body>
 </template>
 <script>
@@ -77,7 +87,8 @@ body{background: #f3f3f3;}
   width: 150px;
   border-radius: 10px;
   box-shadow: 5px 5px 5px 5px lightgray;
-  margin-top: 30px;
+  margin: 30px;
   border: none;
+  background-color: #ffffff;
 }
 </style>
