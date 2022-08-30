@@ -30,5 +30,6 @@ module.exports = class recipe extends Sequelize.Model {
     });
   }
   static associate(db) {
+    db.Recipe.belongsTo(db.RecipeNutrient, {foreignKey :'itemCode', sourceKey:'foodCode'});
   }
 };
