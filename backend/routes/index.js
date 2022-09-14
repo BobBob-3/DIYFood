@@ -5,7 +5,6 @@ const ingredient = require('./ingredient');
 const user = require('./user')
 const recipe = require('./recipe')
 const dietanalysis = require('./dietanalysis');
-// const auth = require('./auth');
 
 //해당 라우터 모든 요청에 대해 값 집어넣기
 router.use((req,res,next)=>{
@@ -17,7 +16,6 @@ router.get('/' ,(req,res,next) =>{
     res.send('hi');
 })
 
-// router.use('/auth', auth);
 router.use('/user', user);
 router.use('/ingredient',ingredient);
 router.use('/recipe', recipe);
