@@ -19,21 +19,17 @@ async function getTodayData(p_item_category_code, p_regday) {
             const itemCode = itemData[i].item_code;
             const detailItemCode = itemData[i].kind_code;
             const rank = itemData[i].rank;
-            const price = itemData[i].dpr1;
+            const price = itemData[i].dpr2;
 
             // 값이 없는 경우 해당 값은 기존 데이터 사용
             if(price === '-')
                 continue;
-            // 1kg으로 유닛 설정
-            if (unit.includes('g')) {
-                unit = '1kg';
-            }
+
             const item = {
                 itemCode: itemCode,
                 detailItemCode: detailItemCode,
                 rank: rank,
                 price: price,
-                unit: unit,
             }
             await models.LiveIngredient.update(
                 {

@@ -11891,9 +11891,10 @@ section#MyPage form#MyPageForm :-ms-input-placeholder {
 }
 .box-item {
   width: 100%;
-  height: max-content;
+  height: auto;
   background-color: #f3f3f3;
   border-radius: 5px;
+  padding: 5px;
   padding-bottom:0%;
   margin-bottom: 10px;
 }

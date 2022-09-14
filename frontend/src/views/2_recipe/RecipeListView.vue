@@ -35,7 +35,7 @@
         </div>
       </div>
       <div v-for="(contents, i) in recipeList" :key="i">
-        <a :href="`/recipe/${contents.RCP_SEQ}`" target="_blank">
+        <a :href="`/recipe/foodname/${contents.RCP_NM}`" target="_blank" @click="saveContents(contents)">
           <div name="card" class="card-custom">
             <div class="cropped" style="text-align:center; width: 100%; height: 50%; overflow: hidden; border-radius: 5%;">
               <img :src=contents.ATT_FILE_NO_MAIN width="100%" style="margin: -10%;">
@@ -226,6 +226,28 @@ export default {
         }).catch(error => {
           console.log(error)
         })
+    },
+    saveContents (contents) {
+      localStorage.setItem('RCP_NM', contents.RCP_NM)
+      localStorage.setItem('ATT_FILE_NO_MAIN', contents.ATT_FILE_NO_MAIN)
+      localStorage.setItem('RCP_PARTS_DTLS', contents.RCP_PARTS_DTLS)
+      localStorage.setItem('INFO_ENG', contents.INFO_ENG)
+      localStorage.setItem('INFO_FAT', contents.INFO_FAT)
+      localStorage.setItem('INFO_PRO', contents.INFO_PRO)
+      localStorage.setItem('INFO_CAR', contents.INFO_CAR)
+      localStorage.setItem('INFO_NA', contents.INFO_NA)
+      localStorage.setItem('MANUAL_IMG01', contents.MANUAL_IMG01)
+      localStorage.setItem('MANUAL_IMG02', contents.MANUAL_IMG02)
+      localStorage.setItem('MANUAL_IMG03', contents.MANUAL_IMG03)
+      localStorage.setItem('MANUAL_IMG04', contents.MANUAL_IMG04)
+      localStorage.setItem('MANUAL_IMG05', contents.MANUAL_IMG05)
+      localStorage.setItem('MANUAL_IMG06', contents.MANUAL_IMG06)
+      localStorage.setItem('MANUAL01', contents.MANUAL01)
+      localStorage.setItem('MANUAL02', contents.MANUAL02)
+      localStorage.setItem('MANUAL03', contents.MANUAL03)
+      localStorage.setItem('MANUAL04', contents.MANUAL04)
+      localStorage.setItem('MANUAL05', contents.MANUAL05)
+      localStorage.setItem('MANUAL06', contents.MANUAL06)
     },
     upClick () {
       window.scrollTo({ top: 0, behavior: 'smooth' })

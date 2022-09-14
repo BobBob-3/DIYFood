@@ -9,7 +9,6 @@ module.exports = () => {
       //첫번째 인자는 에러 발생시 사용, 저장하고 싶은 데이터
     });
     passport.deserializeUser((email, done) => {  
-        console.log("passport: " + email);
       //매 요청마다 실행, passport 미들웨어가 메소드 호출 serialize done 두번째 인수를 갖다씀
         User.findOne({
           where: { email },

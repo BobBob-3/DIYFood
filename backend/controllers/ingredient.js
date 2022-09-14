@@ -55,7 +55,7 @@ const ingredient = {
       const itemData = response.data.data.item;
       res.send(itemData);
     } catch (err) {
-      console.error(err);
+      return res.status(404).send(error);
     }
   },
   getUserList: async (req, res) => {
@@ -63,15 +63,15 @@ const ingredient = {
       const ingredientyList = await models.LiveIngredient.findAll({});
       res.send(ingredientyList);
     } catch (err) {
-      console.error(err);
+      return res.status(404).send(error);
     }
   },
   setUserList: async (req, res) => {
-    const itemCodeList = req.body.finalCodeList; //array (itemcode)
-    const date = req.body.date;
-    const userId = res.locals.user.id;
-    console.log(itemCodeList);
     try {
+      const itemCodeList = req.body.finalCodeList; //array (itemcode)
+      const date = req.body.date;
+      const userId = res.locals.user.id;
+      
       for (let i = 0; i < itemCodeList.length; i++) {
         models.UserIngredient.create({
           userId: userId,
@@ -81,9 +81,8 @@ const ingredient = {
           date: date,
         });
       }
-      res.send("done");
     } catch (err) {
-      console.error(err);
+      return res.status(404).send(error);
     }
   },
 
@@ -96,7 +95,7 @@ const ingredient = {
       });
       res.send(ingredientyList);
     } catch (err) {
-      console.error(err);
+      return res.status(404).send(error);
     }
   },
   getExistList: async (req, res) => {
@@ -104,15 +103,15 @@ const ingredient = {
       const ingredientyList = await models.Ingredient.findAll({});
       res.send(ingredientyList);
     } catch (err) {
-      console.error(err);
+      return res.status(404).send(error);
     }
   },
   setExistList: async (req, res) => {
-    const itemCodeList = req.body; //array (itemcode)
-    const userId = res.locals.user.id;
-
     // 기존 저장 재료를 제거 후 새롭게 이번주 보유 재료를 저장
     try {
+      const itemCodeList = req.body; //array (itemcode)
+      const userId = res.locals.user.id;
+  
       await models.ExistIngredient.destroy({
         where: { userId: userId },
       });
@@ -122,9 +121,8 @@ const ingredient = {
           itemCode: itemCodeList[i],
         });
       }
-      res.send("done");
     } catch (err) {
-      console.error(err);
+      return res.status(404).send(error);
     }
   },
 };

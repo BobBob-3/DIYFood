@@ -57,7 +57,6 @@ app.use(passport.session()); //session 객체에 passport 정보를 저장
 app.use('/', routes);
 app.use('/auth', authRouter);
 
-const models = require('./models');
 const server = require('./server');
 //오후 16시마다 업데이트 (화 ~ 토) 
 cron.schedule('0 16 * * 2-6', async function(){

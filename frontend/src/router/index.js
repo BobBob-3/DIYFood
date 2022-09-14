@@ -67,11 +67,19 @@ const routes = [
       )
   },
   {
-    path: '/recipe/:foodCode',
-    name: 'DetailRecipe',
+    path: '/recipe/foodname/:foodName',
+    name: 'DetailRecipe_Name',
     component: () =>
       import(
-        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/2_recipe/DetailRecipe.vue'
+        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/2_recipe/DetailRecipeName.vue'
+      )
+  },
+  {
+    path: '/recipe/foodcode/:foodCode',
+    name: 'DetailRecipe_Code',
+    component: () =>
+      import(
+        /* webpackChunkName: "event", webpackPrefetch:true */ '../views/2_recipe/DetailRecipeCode.vue'
       )
   },
   {

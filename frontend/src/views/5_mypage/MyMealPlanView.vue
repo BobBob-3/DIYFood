@@ -36,7 +36,7 @@
               <div class="recipe-box" >
                 <div class="recipe-card" style="display: flex;">
                   <div style="width:85%; height:100%;">
-                    <a :href="`/recipe/${data.foodCode}`">
+                    <a :href="`/recipe/foodcode/${data.foodCode}`">
                       <img :src=data.RecipeNutrient.foodImage class="food-img" onerror="this.src='https://ifh.cc/g/RXYY1z.png'">
                       <div class="word" style="vertical-align: middle; margin-left: 110px; margin-right:15px; margin-top: 8px;">
                         <p style="font-weight: 400; font-size:1.2rem">{{data.RecipeNutrient.foodName}}</p>

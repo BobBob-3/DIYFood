@@ -6,40 +6,74 @@ const models = require('../models');
 const bodyParser = require('body-parser');
 
 const dietanalysis = {
-    getUserInfo : async (req, res) => {
-        const userId = res.locals.user.id;
-        const existUserInfo = await models.UserInfo.findOne({
-            attribute : ['userId'],
-            where : {
-                userId : userId// 아이디, 날짜
+    getUserInfo : async (req, res, done) => {
+        try{
+            const userId = res.locals.user.id;
+            const existUserInfo = await models.UserInfo.findOne({
+                
+                where : {
+                    userId : userId// 아이디, 날짜
+                }
+            })
+            if(existUserInfo){
+            const resultInfo = {
+                gender : existUserInfo.dataValues.gender,
+                age : existUserInfo.dataValues.age,
+                weight : existUserInfo.dataValues.weight,
+                height : existUserInfo.dataValues.height,
+                purpose : existUserInfo.dataValues.purpose,
+                activeMass : existUserInfo.dataValues.activeMass,
             }
-        })
-        const resultInfo = {
-            gender : existUserInfo.dataValues.gender,
-            age : existUserInfo.dataValues.age,
-            weight : existUserInfo.dataValues.weight,
-            height : existUserInfo.dataValues.height,
-            purpose : existUserInfo.dataValues.purpose,
-            activeMass : existUserInfo.dataValues.activeMass,
+            res.send(resultInfo)
+            }else{
+                console.log('X')
+            }
+        }catch(error){
+            console.error(error);
         }
-        res.send(resultInfo)
-
     },
     setUserInfo : async (req, res) => {
-        await models.UserInfo.create({
-
-            'gender' : req.body.gender,
-            'age' : req.body.age,
-            'weight' : req.body.weight,
-            'height' : req.body.height,
-            'purpose' : req.body.purpose,
-            'activeMass' : req.body.activeMass,
-            'userId' : res.locals.user.id,
-            'id': res.locals.user.id,
+        try{
+        const userId = res.locals.user.id;
+        // userinfo에 정보 있는지 확인
+        const myId = await models.UserInfo.findOne({
+            attribute : ['userId'],
+            where :{
+                userId : userId
+            }
+            
         })
-        res.send('유저 정보 저장완료');
+        console.log(myId);
+        if(myId !== null){
+            await models.UserInfo.update({
+                'gender' : req.body.gender,
+                'age' : req.body.age,
+                'weight' : req.body.weight,
+                'height' : req.body.height,
+                'purpose' : req.body.purpose,
+                'activeMass' : req.body.activeMass,
+            },
+            {where : {userId : userId}}
+            )
+            res.send('유저 정보 업데이트 완료');
+        }else{
+            await models.UserInfo.create({
+                'gender' : req.body.gender,
+                'age' : req.body.age,
+                'weight' : req.body.weight,
+                'height' : req.body.height,
+                'purpose' : req.body.purpose,
+                'activeMass' : req.body.activeMass,
+                'userId' : res.locals.user.id,
+            })
+            res.send('유저 정보 저장완료');
+        }
 
+        }catch(error){
+            console.error(error);
+        }
     },
+
     getUserRecipeAnalysis : async (req, res) => {
         const date = req.query.date;
         const userId = res.locals.user.id;
@@ -85,10 +119,8 @@ const dietanalysis = {
                 userId : userId// 아이디, 날짜
             }
         })
-        let man_BasicMetabolicRate = 0;
-        let woman_BasicMetabolicRate = 0;
-        let maintain_calorieMan = 0;
-        let maintain_calorieWoman = 0;
+        let BasicMetabolicRate = 0;
+        let maintain_calorie = 0;
         let activeMass = 0;
         let dailyNeedEnergy = 0;
         if ( userInformation.dataValues.activeMass == 0){
@@ -117,13 +149,13 @@ const dietanalysis = {
             purpose = 0.9
         }
         if (userInformation.dataValues.gender == 'male'){
-            man_BasicMetabolicRate = 66 + (13.7 * userInformation.dataValues.weight) +(5 * userInformation.dataValues.height) - (6.8 * userInformation.dataValues.age);
-            maintain_calorieMan = man_BasicMetabolicRate * activeMass //
-            dailyNeedEnergy = maintain_calorieMan * purpose
+            BasicMetabolicRate = 66 + (13.7 * userInformation.dataValues.weight) +(5 * userInformation.dataValues.height) - (6.8 * userInformation.dataValues.age);
+            maintain_calorie = BasicMetabolicRate * activeMass //
+            dailyNeedEnergy = maintain_calorie * purpose
         } else {
-            woman_BasicMetabolicRate = 655 + (9.6 * userInformation.dataValues.weight) + (1.7 * userInformation.dataValues.height) - (4.7 * userInformation.dataValues.age);
-            maintain_calorieWoman = woman_BasicMetabolicRate * activeMass //
-            dailyNeedEnergy = maintain_calorieWoman * purpose
+            BasicMetabolicRate = 655 + (9.6 * userInformation.dataValues.weight) + (1.7 * userInformation.dataValues.height) - (4.7 * userInformation.dataValues.age);
+            maintain_calorie = BasicMetabolicRate * activeMass //
+            dailyNeedEnergy = maintain_calorie * purpose
         }
         console.log(userInformation.dataValues.age)
         console.log(dailyNeedEnergy)
@@ -139,6 +171,8 @@ const dietanalysis = {
         let percentFat = sumFat / daily3rdNutrientTotal * 100
         console.log(percentCarbohydrate)
         const result = {
+            BasicMetabolicRate :BasicMetabolicRate,
+            maintain_calorie : maintain_calorie,
             dailyNeedEnergy : dailyNeedEnergy,
             dailyNeedProtein : dailyNeedProtein,
             dailyNeedNatrium : dailyNeedNatrium,

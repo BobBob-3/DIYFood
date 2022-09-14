@@ -44,8 +44,8 @@
           <input v-if="this.categoryCode !== 4" type="button" class="btn btn-primary btn-lg btn-custom" value="기타" @click="getRecipeData(date_start, 4, 0)">
           <input v-if="this.categoryCode === 4" type="button" class="btn btn-primary btn-lg btn-custom" value="기타" @click="getRecipeData(date_start, 4, 0)">
         </div>
-        <div class="box-item" style="text-align: center;">
-          <p><img src="https://cdn-icons-png.flaticon.com/128/308/308556.png" width="20px">  {{this.checkedItemName}}</p>
+        <div class="box-item-custom" style="text-align: center;">
+          <p><img src="https://cdn-icons-png.flaticon.com/128/308/308556.png" width="20px" style="margin-bottom:10px">  {{this.checkedItemName}}</p>
         </div>
         <div style="width:100%">
           <!-- Loading -->
@@ -60,7 +60,7 @@
           <!-- Recipe Card -->
           <div v-for="(contents, index) in recipeList" :key="index">
             <div name="card" class="card-custom">
-              <a :href="`/recipe/${contents.foodCode}`" target="_blank">
+              <a :href="`/recipe/foodcode/${contents.foodCode}`" target="_blank">
                 <div class="cropped" style="text-align:center; width: 100%; height: 50%; overflow: hidden; border-radius: 10px;">
                   <img :src=contents.foodImage width="100%" style="margin: -25%;" onerror="this.src='https://ifh.cc/g/RXYY1z.png'">
                 </div>
@@ -207,6 +207,17 @@ export default {
     padding: 10px;
     float: left;
     margin: 1.6%;
+  }
+  .box-item-custom {
+    width: 95%;
+    margin-right:2.5%;
+    margin-left: 2.5%;
+    height: auto;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    padding: 5px;
+    padding-bottom:0px;
+    margin-bottom: 10px;
   }
   .word {
     overflow: hidden;

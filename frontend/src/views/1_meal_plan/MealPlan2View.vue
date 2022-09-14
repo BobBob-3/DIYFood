@@ -90,7 +90,8 @@ export default {
       metaItemList: [],
       selected: [],
       categoryCode: '1',
-      userExistList: []
+      userExistList: [],
+      allItemList: []
     }
   },
   setup () {},
@@ -99,12 +100,12 @@ export default {
     this.getUserExistList()
     // 기존 보유 재료 이름 표시
     setTimeout(() => {
-      for (var i = 0; i < this.itemList.length; i++) {
-        if (this.checkedItemCode.includes(this.itemList[i].itemCode)) {
-          this.checkedItemName.push(this.itemList[i].itemName)
+      for (var i = 0; i < this.allItemList.length; i++) {
+        if (this.checkedItemCode.includes(this.allItemList[i].itemCode)) {
+          this.checkedItemName.push(this.allItemList[i].itemName)
         }
       }
-    }, 2000)
+    }, 1000)
   },
   mounted () {},
   unmounted () {},
@@ -115,6 +116,8 @@ export default {
         this.itemList = response.data
         this.metaItemList = response.data
         this.itemList = this.metaItemList.filter(item => parseInt(item.itemCode / 100) === 1)
+        this.allItemList = response.data
+        console.log(this.allItemList)
       }).catch(error => {
         console.log(error)
       })

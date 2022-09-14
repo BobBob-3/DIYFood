@@ -22,8 +22,8 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0 input_row">
-                        <label class="form-label" for="name">이름</label>
-                        <input type="text" id="name" class="form-control" placeholder="Name" v-model="user.name" required/>
+                        <label class="form-label" for="name">이름 <span style="color:red">{{namecheck_msg}}</span></label>
+                        <input type="text" id="name" class="form-control" placeholder="Name" v-model="user.name" @blur="characterCheck(user.name)" required/>
                       </div>
                     </div>
                     <div class="d-flex flex-row align-items-center mb-4">
@@ -41,17 +41,15 @@
                       </div>
                     </div>
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button class="btn btn-primary btn-lg">회원정보 수정</button>
+                      <button type="submit" class="btn btn-primary btn-lg">회원정보 수정</button>
                     </div>
                   </div>
                 </form>
               </div>
-
               <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                 <img src="https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
                 class="img-fluid" style="border-radius:20px;">
               </div>
-
             </div>
           </div>
         </div>
@@ -70,7 +68,9 @@ export default {
       email: '',
       name: '',
       password: ''
-    }
+    },
+    namecheck_code: 0,
+    namecheck_msg: ''
   }
 },
   setup() {},
@@ -97,22 +97,27 @@ export default {
     },
     // user info modify submit
     submitForm(){
-      // API 요청시 전달할 userData 객체
-      const userData = {
-        email: this.user.email,
-        password: this.user.password,
-        name: this.user.name,
-      };
-      const url = 'http://localhost:3000/user/info';
-      this.$axios.patch(url, userData, { withCredentials: true })
-      .then((res)=> {
-        console.log(res);
-        if(res.data===0){
-          alert("회원정보가 수정되었습니다.")
-        }else{
-          alert("다시 시도해주세요");
-        }
-      });
+      if (this.namecheck_code===1) {
+        // API 요청시 전달할 userData 객체
+        const userData = {
+          email: this.user.email,
+          password: this.user.password,
+          name: this.user.name,
+        };
+        const url = 'http://localhost:3000/user/info';
+        this.$axios.patch(url, userData, { withCredentials: true })
+        .then((res)=> {
+          console.log(res);
+          if(res.data===0){
+            alert("회원정보가 수정되었습니다.")
+          }else{
+            alert("다시 시도해주세요");
+          }
+        })
+      }
+      else {
+        alert('이름에 특수문자는 입력할 수 없습니다.')
+      }
     },
     //비밀번호 확인
     passwordConfirm(){
@@ -120,6 +125,21 @@ export default {
         alert("비밀번호가 일치하지 않습니다.")
       }
     },
+    characterCheck (str) {
+      var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+      //특수문자 검증
+      if(reg.test(str)){
+        alert('이름에 특수문자는 입력할 수 없습니다.')
+        this.namecheck_msg = '특수문자는 입력할 수 없습니다.'
+        //특수문자 제거후 리턴
+        return str.replace(reg, "");
+      } else {
+        //특수문자가 없으므로 본래 문자 리턴
+        this.namecheck_msg = ''
+        this.namecheck_code = 1
+        return str;
+      }  
+    }
   }
 }
 </script>

@@ -16,6 +16,14 @@ router.get('/' ,(req,res,next) =>{
     res.send('hi');
 })
 
+router.get('/islogin', (req, res)=>{
+    if(req.user == undefined){
+        res.send(false) ;
+    }else{
+        res.send(true);
+    }
+})
+
 router.use('/user', user);
 router.use('/ingredient',ingredient);
 router.use('/recipe', recipe);

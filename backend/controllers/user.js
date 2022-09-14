@@ -16,22 +16,25 @@ const user = {
       await insertUserInfo(email, password, name);
       res.send("유저 email 삽입 성공");
     } catch (err) {
-      console.log(err);
-      next(err);
+      return res.status(404).send(err);
     }
   },
 
   checkEmail: async (req, res) => {
-    const email = req.query.email;
-    if (email !== undefined) {
-      const user = await models.User.findOne({ where: { email: email } });
-      if (user) {
-        res.send("0");
+    try{
+      const email = req.query.email;
+      if (email !== undefined) {
+        const user = await models.User.findOne({ where: { email: email } });
+        if (user) {
+          res.send("0");
+        } else {
+          res.send("1");
+        }
       } else {
-        res.send("1");
+        res.send("fail");
       }
-    } else {
-      res.send("fail");
+    }catch(err){
+      return res.status(404).send(err);
     }
   },
 
@@ -68,7 +71,11 @@ const user = {
   },
 
   getInfo: (req, res) => {
-    res.send(res.locals.user);
+    try{
+      res.send(res.locals.user);
+    }catch(err){
+      return res.status(404).send(err);
+    }
   },
 
   setInfo: async (req, res) => {
@@ -76,67 +83,87 @@ const user = {
       const { email, password, name } = req.body;
       await modifyUserInfo(email, password, name);
     } catch (err) {
-      res.send(err.message);
+      return res.status(404).send(err);
     }
   },
 
   //회원 정보 및 전체 정보 삭제
   deleteInfo: async (req, res) => {
-    const id = res.locals.user.id;
-    const email = res.locals.user.email;
-    await deleteAllInfo(email);
+    try{
+      const id = res.locals.user.id;
+      const email = res.locals.user.email;
+      await deleteAllInfo(email);
+    }catch(err){
+      return res.status(404).send(err);
+    }
   },
 
   //회원 리스트 조회
   admin: async (req, res) => {
-    const userList = await models.User.findAll({
-      attributes: ["email", "name", "createdAt"],
-    });
-    res.send(userList);
+    try{
+      const userList = await models.User.findAll({
+        attributes: ["email", "name", "createdAt"],
+      });
+      res.send(userList);
+    }catch(err){
+      return res.status(404).send(err);
+    }
   },
 
   getRecipeList: async (req, res) => {
-    const userId = res.locals.user.id;
-    const month = req.query.month;
-    const recipeList = await models.UserRecipe.findAll({
-      include: [
-        {
-          model: RecipeNutrient,
-          attributes: ["foodImage", "foodName"],
-        },
-      ],
-      where: { userId: userId, date: { [Op.like]: `%${month}%` } },
-    });
-    res.send(recipeList);
+    try{
+      const userId = res.locals.user.id;
+      const month = req.query.month;
+      const recipeList = await models.UserRecipe.findAll({
+        include: [
+          {
+            model: RecipeNutrient,
+            attributes: ["foodImage", "foodName"],
+          },
+        ],
+        where: { userId: userId, date: { [Op.like]: `%${month}%` } },
+      });
+      res.send(recipeList);
+    }catch(err){
+      return res.status(404).send(err);
+    }
   },
 
   // 사용자 식단(레시피 리스트들 삭제)
   deleteRecipeList: async (req, res) => {
-    const userId = res.locals.user.id;
-    const date = req.query.date;
-    await models.UserRecipe.destroy({
-      where: {
-        userId: userId,
-        date: date,
-      },
-    });
-    res.end();
+    try{
+      const userId = res.locals.user.id;
+      const date = req.query.date;
+      await models.UserRecipe.destroy({
+        where: {
+          userId: userId,
+          date: date,
+        },
+      });
+      res.end();
+    }catch(err){
+      return res.status(404).send(err);
+    }
   },
 
   //사용자 개별 레시피 삭제
   deleteRecipe: async (req, res) => {
-    const userId = res.locals.user.id;
-    const date = req.query.date;
-    const foodCode = req.query.foodCode;
-
-    await models.UserRecipe.destroy({
-      where: {
-        userId: userId,
-        date: date,
-        foodCode: foodCode,
-      },
-    });
-    res.end();
+    try{
+      const userId = res.locals.user.id;
+      const date = req.query.date;
+      const foodCode = req.query.foodCode;
+  
+      await models.UserRecipe.destroy({
+        where: {
+          userId: userId,
+          date: date,
+          foodCode: foodCode,
+        },
+      });
+      res.end();
+    }catch(err){
+      return res.status(404).send(err);
+    }
   },
 };
 
@@ -146,13 +173,15 @@ const insertUserInfo = async (email, password, name) => {
     .pbkdf2Sync(password, randomSalt, 65536, 64, "sha512")
     .toString("hex");
   const passwordWithSalt = cryptedPassword + "$" + randomSalt;
-
-  await models.User.create({
-    email: email,
-    password: passwordWithSalt,
-    name: name,
-  });
-  console.log("created!");
+  try{
+    await models.User.create({
+      email: email,
+      password: passwordWithSalt,
+      name: name,
+    });
+  }catch(err){
+    return res.status(400).send(err);
+  }
 };
 
 const encryprtPassword = async function (password) {
@@ -165,34 +194,43 @@ const encryprtPassword = async function (password) {
 };
 
 const modifyUserInfo = async (email, password, name) => {
-  const passwordWithSalt = await encryprtPassword(password);
-  await models.User.update(
-    {
-      password: passwordWithSalt,
-      name: name,
-    },
-    {
-      where: { email: email },
-    }
-  );
+  try{
+    const passwordWithSalt = await encryprtPassword(password);
+    await models.User.update(
+      {
+        password: passwordWithSalt,
+        name: name,
+      },
+      {
+        where: { email: email },
+      }
+    );
+  }catch(err){
+    return res.status(400).send(err);
+  }
+  
 };
 
 const deleteAllInfo = async (email) => {
-  const user = await models.User.findOne({
-    where: { email: email },
-  });
-  await models.ExistIngredient.destroy({
-    where: { userId: user.id },
-  });
-  await models.UserIngredient.destroy({
-    where: { userId: user.id },
-  });
-  await models.UserRecipe.destroy({
-    where: { userId: user.id },
-  });
-  await models.User.destroy({
-    where: { email: email },
-  });
+  try{
+    const user = await models.User.findOne({
+      where: { email: email },
+    });
+    await models.ExistIngredient.destroy({
+      where: { userId: user.id },
+    });
+    await models.UserIngredient.destroy({
+      where: { userId: user.id },
+    });
+    await models.UserRecipe.destroy({
+      where: { userId: user.id },
+    });
+    await models.User.destroy({
+      where: { email: email },
+    });
+  }catch(err){
+    return res.status(404).send(err);
+  }
 };
 
 module.exports = user;

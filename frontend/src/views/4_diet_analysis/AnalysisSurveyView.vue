@@ -101,6 +101,7 @@ export default {
   data () {
     return {
       username: '',
+      userid: '',
       userdata: {
         gender: '',
         age: '',
@@ -108,7 +109,8 @@ export default {
         weight: '',
         purpose:'',
         activeMass: ''
-      }
+      },
+      surveyData: []
     }
   },
   setup () {},
@@ -120,6 +122,7 @@ export default {
   created () {
     this.start()
     this.getUserInfo()
+    this.getUserSurveyData()
   },
   mounted () {},
   unmounted () {},
@@ -132,10 +135,22 @@ export default {
           if (res.data) {
             console.log(res.data)
             this.username = res.data.name
+            this.userid = res.data.id
           } else if (res.data.message) {
             alert(res.data.message)
           }
         })
+    },
+    getUserSurveyData () {
+      const url = 'http://localhost:3000/dietanalysis/analysis'
+      this.$axios.get(url, { withCredentials: true })
+      .then(response => {
+        console.log('### response: ' + JSON.stringify(response))
+        this.surveyData = response.data
+        console.log(this.surveyData)
+      }).catch(error => {
+        console.log(error)
+      })
     },
     start () {
       if (this.cookie) {
@@ -146,7 +161,7 @@ export default {
       }
     },
     submitForm () {
-      this.$axios.post('http://localhost:3000/analysis/survey', this.userdata, { withCredentials: true })
+      this.$axios.post(`http://localhost:3000/dietanalysis/analysis?:${this.userid}`, this.userdata, { withCredentials: true })
         .then(function (response) {
           console.log(response)
           // location.href = '/analysis/result'

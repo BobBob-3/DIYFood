@@ -26,9 +26,14 @@
                           <input type="password" id="password" class="form-control" placeholder="Password" v-model="user.password" required/>
                         </div>
                       </div>
-                      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <a href="/"><button type="submit" class="btn btn-primary btn-lg">로그인</button></a>
-                        <a href="/user/signup" class="btn btn-primary btn-lg">회원가입</a>
+                      <div class="ms-3">
+                        <div class="d-flex justify-content-center">
+                          <a href="/"><button type="submit" class="btn btn-primary btn-lg btn-custom" style="margin-left:10px">로그인</button></a>
+                          <a href="/user/signup" class="btn btn-primary btn-lg btn-custom">회원가입</a>
+                        </div>
+                        <div class="d-flex justify-content-center mb-3 mb-lg-4">
+                          <a href="/auth/kakao" class="btn"><img src="@/assets/kakao_login_large_wide.png" height="50px"></a>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -85,4 +90,9 @@ export default {
 <style>
 @import "@/css/styles.css";
 body{background: #f3f3f3;}
+.btn-custom {
+  margin-left: 0px;
+  width:161px;
+  border-radius: 7px;
+}
 </style>
