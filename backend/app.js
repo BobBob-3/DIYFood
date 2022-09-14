@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
-
+const authRouter = require('./routes/auth')
 const dotenv = require('dotenv');
 dotenv.config();
 const createError = require('http-errors');
@@ -55,6 +55,7 @@ app.use(passport.initialize());  // req 객체에 passport 설정을 담아줌
 app.use(passport.session()); //session 객체에 passport 정보를 저장
 
 app.use('/', routes);
+app.use('/auth', authRouter);
 
 const models = require('./models');
 const server = require('./server');

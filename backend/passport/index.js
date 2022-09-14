@@ -1,6 +1,7 @@
 const passport = require('passport');
 const local = require('./localStrategy');
 const User = require('../models/User');
+const kakao = require('./kakaoStrategy');
 
 module.exports = () => {
     passport.serializeUser((user, done) => { //로그인 시 실행
@@ -18,4 +19,5 @@ module.exports = () => {
       });
     
       local();
+      kakao();
 };
