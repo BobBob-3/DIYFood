@@ -76,7 +76,7 @@ const dietanalysis = {
 
     getUserRecipeAnalysis : async (req, res) => {
         const date = req.query.date;
-        const userId = '4';
+        const userId = res.locals.user.id;
         // 유저가 섭취한 음식을 받아옴 // 날짜정보도 같이 조회
         const userSelectFood = await models.UserRecipe.findAll({
             attribute : ['foodCode'],
