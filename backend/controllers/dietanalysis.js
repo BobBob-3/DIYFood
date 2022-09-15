@@ -76,7 +76,7 @@ const dietanalysis = {
 
     getUserRecipeAnalysis : async (req, res) => {
         const date = req.query.date;
-        const userId = res.locals.user.id;
+        const userId = '4';
         // 유저가 섭취한 음식을 받아옴 // 날짜정보도 같이 조회
         const userSelectFood = await models.UserRecipe.findAll({
             attribute : ['foodCode'],
@@ -169,7 +169,27 @@ const dietanalysis = {
         let percentCarbohydrate = sumCarbohydrate / daily3rdNutrientTotal *100
         let percentProtein = sumProtein / daily3rdNutrientTotal * 100
         let percentFat = sumFat / daily3rdNutrientTotal * 100
-        console.log(percentCarbohydrate)
+
+        let BMIrate = '';
+        let BMI = userInformation.dataValues.weight / ((userInformation.dataValues.height/100) * (userInformation.dataValues.height/100))
+        console.log(BMI)
+        if (BMI < 18.5){
+            BMIrate = '저체중'
+        }
+        else if ( 18.5<= BMI < 23 ){
+            BMIrate = '정상'
+        }
+        else if ( 23 <= BMI < 25){
+            BMIrate = '과체중'
+        }
+        else if (25 <= BMI < 30){
+            BMIrate = '비만'
+        }
+        else if (BMI >= 30){
+            BMIrate = '고도비만'
+        }
+        console.log(BMIrate)
+
         const result = {
             BasicMetabolicRate :BasicMetabolicRate,
             maintain_calorie : maintain_calorie,
