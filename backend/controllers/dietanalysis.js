@@ -187,6 +187,295 @@ const dietanalysis = {
             BMIrate = '고도비만'
         }
         console.log(BMIrate)
+        
+        needCarbohydrate = dailyNeedCarbohydrate - sumCarbohydrate
+        needProtein = dailyNeedProtein - sumProtein
+        needFat = dailyNeedFat - sumFat
+        console.log(needCarbohydrate)
+        console.log(needProtein)
+        console.log(needFat)
+        let energy = 0;
+        let additionalrecipe =[];
+        let additionalfood = [];
+
+        if (needCarbohydrate > needProtein){
+            if (needCarbohydrate > needFat) {
+                console.log(needCarbohydrate)
+                TotalneedNutrition = dailyNeedCarbohydrate
+                NowNutrition =  sumCarbohydrate
+                need = needCarbohydrate
+                const SelectRecipe = await models.RecipeNutrient.findAll({
+                    // attribute : ['foodCode'],
+                    where : {
+
+                        foodCarbohydrate : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectRecipe)
+                console.log(SelectRecipe.dataValues)
+                for(let item in SelectRecipe){
+                    additionalrecipeName = SelectRecipe[item].dataValues.foodName;
+                    additionalrecipeEnergy = SelectRecipe[item].dataValues.foodEnergy;
+                    additionalrecipeCarbohydrate = SelectRecipe[item].dataValues.foodCarbohydrate;
+                    additionalrecipeProtein = SelectRecipe[item].dataValues.foodProtein;
+                    additionalrecipeFat = SelectRecipe[item].dataValues.foodFat;
+                    additionalrecipeImage = SelectRecipe[item].dataValues.foodImage;
+                    additionalrecipeNatrium = SelectRecipe[item].dataValues.foodNatrium;
+
+                    additionalrecipe.push(additionalrecipeName);
+                    additionalrecipe.push(additionalrecipeEnergy);
+                    additionalrecipe.push(additionalrecipeCarbohydrate);
+                    additionalrecipe.push(additionalrecipeProtein);
+                    additionalrecipe.push(additionalrecipeFat);
+                    additionalrecipe.push(additionalrecipeImage);
+                    additionalrecipe.push(additionalrecipeNatrium);
+                }
+                console.log(additionalrecipe)
+                const SelectFood = await models.Food.findAll({
+
+                    where : {
+
+                        foodCarbohydrate : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectFood)
+                console.log(SelectFood.dataValues)
+                for(let item in SelectFood){
+                    additionalfoodName = SelectFood[item].dataValues.foodName;
+                    additionalfoodEnergy = SelectFood[item].dataValues.foodEnergy;
+                    additionalfoodCarbohydrate = SelectFood[item].dataValues.foodCarbohydrate;
+                    additionalfoodProtein = SelectFood[item].dataValues.foodProtein;
+                    additionalfoodFat = SelectFood[item].dataValues.foodFat;
+                    additionalfoodNatrium = SelectFood[item].dataValues.foodNatrium;
+
+                    additionalfood.push(additionalfoodName);
+                    additionalfood.push(additionalfoodEnergy);
+                    additionalfood.push(additionalfoodCarbohydrate);
+                    additionalfood.push(additionalfoodProtein);
+                    additionalfood.push(additionalfoodFat);
+                    additionalfood.push(additionalfoodNatrium);
+                }
+                console.log(additionalfood)
+
+            }
+            else {
+                console.log(needFat)
+                TotalneedNutrition = dailyNeedCarbohydrate
+                NowNutrition =  sumCarbohydrate
+                need = needFat
+                const SelectRecipe = await models.RecipeNutrient.findAll({
+
+                    where : {
+
+                        foodFat : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectRecipe)
+                console.log(SelectRecipe.dataValues)
+                for(let item in SelectRecipe){
+                    additionalrecipeName = SelectRecipe[item].dataValues.foodName;
+                    additionalrecipeEnergy = SelectRecipe[item].dataValues.foodEnergy;
+                    additionalrecipeCarbohydrate = SelectRecipe[item].dataValues.foodCarbohydrate;
+                    additionalrecipeProtein = SelectRecipe[item].dataValues.foodProtein;
+                    additionalrecipeFat = SelectRecipe[item].dataValues.foodFat;
+                    additionalrecipeImage = SelectRecipe[item].dataValues.foodImage;
+                    additionalrecipeNatrium = SelectRecipe[item].dataValues.foodNatrium;
+
+                    additionalrecipe.push(additionalrecipeName);
+                    additionalrecipe.push(additionalrecipeEnergy);
+                    additionalrecipe.push(additionalrecipeCarbohydrate);
+                    additionalrecipe.push(additionalrecipeProtein);
+                    additionalrecipe.push(additionalrecipeFat);
+                    additionalrecipe.push(additionalrecipeImage);
+                    additionalrecipe.push(additionalrecipeNatrium);
+                }
+                console.log(additionalrecipe)
+                const SelectFood = await models.Food.findAll({
+
+                    where : {
+
+                        foodFat : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectFood)
+                console.log(SelectFood.dataValues)
+                for(let item in SelectFood){
+                    additionalfoodName = SelectFood[item].dataValues.foodName;
+                    additionalfoodEnergy = SelectFood[item].dataValues.foodEnergy;
+                    additionalfoodCarbohydrate = SelectFood[item].dataValues.foodCarbohydrate;
+                    additionalfoodProtein = SelectFood[item].dataValues.foodProtein;
+                    additionalfoodFat = SelectFood[item].dataValues.foodFat;
+                    additionalfoodNatrium = SelectFood[item].dataValues.foodNatrium;
+
+                    additionalfood.push(additionalfoodName);
+                    additionalfood.push(additionalfoodEnergy);
+                    additionalfood.push(additionalfoodCarbohydrate);
+                    additionalfood.push(additionalfoodProtein);
+                    additionalfood.push(additionalfoodFat);
+                    additionalfood.push(additionalfoodNatrium);
+                }
+                console.log(additionalfood)
+            }
+        }
+        else {
+            if (needProtein > needFat) {
+                console.log(needProtein)
+                TotalneedNutrition = dailyNeedCarbohydrate
+                NowNutrition =  sumCarbohydrate
+                need = needProtein
+                const SelectRecipe = await models.RecipeNutrient.findAll({
+
+                    where : {
+
+                        foodProtein : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectRecipe)
+                console.log(SelectRecipe.dataValues)
+                for(let item in SelectRecipe){
+                    additionalrecipeName = SelectRecipe[item].dataValues.foodName;
+                    additionalrecipeEnergy = SelectRecipe[item].dataValues.foodEnergy;
+                    additionalrecipeCarbohydrate = SelectRecipe[item].dataValues.foodCarbohydrate;
+                    additionalrecipeProtein = SelectRecipe[item].dataValues.foodProtein;
+                    additionalrecipeFat = SelectRecipe[item].dataValues.foodFat;
+                    additionalrecipeImage = SelectRecipe[item].dataValues.foodImage;
+                    additionalrecipeNatrium = SelectRecipe[item].dataValues.foodNatrium;
+
+                    additionalrecipe.push(additionalrecipeName);
+                    additionalrecipe.push(additionalrecipeEnergy);
+                    additionalrecipe.push(additionalrecipeCarbohydrate);
+                    additionalrecipe.push(additionalrecipeProtein);
+                    additionalrecipe.push(additionalrecipeFat);
+                    additionalrecipe.push(additionalrecipeImage);
+                    additionalrecipe.push(additionalrecipeNatrium);
+                }
+                console.log(additionalrecipe)
+                const SelectFood = await models.Food.findAll({
+
+                    where : {
+
+                        foodProtein : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectFood)
+                console.log(SelectFood.dataValues)
+                for(let item in SelectFood){
+                    additionalfoodName = SelectFood[item].dataValues.foodName;
+                    additionalfoodEnergy = SelectFood[item].dataValues.foodEnergy;
+                    additionalfoodCarbohydrate = SelectFood[item].dataValues.foodCarbohydrate;
+                    additionalfoodProtein = SelectFood[item].dataValues.foodProtein;
+                    additionalfoodFat = SelectFood[item].dataValues.foodFat;
+                    additionalfoodNatrium = SelectFood[item].dataValues.foodNatrium;
+
+                    additionalfood.push(additionalfoodName);
+                    additionalfood.push(additionalfoodEnergy);
+                    additionalfood.push(additionalfoodCarbohydrate);
+                    additionalfood.push(additionalfoodProtein);
+                    additionalfood.push(additionalfoodFat);
+                    additionalfood.push(additionalfoodNatrium);
+                }
+                console.log(additionalfood)
+            }
+            else {
+                console.log(needFat)
+                TotalneedNutrition = dailyNeedCarbohydrate
+                NowNutrition =  sumCarbohydrate
+                need = needFat
+                const SelectRecipe = await models.RecipeNutrient.findAll({
+
+                    where : {
+
+                        foodFat : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectRecipe)
+                console.log(SelectRecipe.dataValues)
+                for(let item in SelectRecipe){
+                    additionalrecipeName = SelectRecipe[item].dataValues.foodName;
+                    additionalrecipeEnergy = SelectRecipe[item].dataValues.foodEnergy;
+                    additionalrecipeCarbohydrate = SelectRecipe[item].dataValues.foodCarbohydrate;
+                    additionalrecipeProtein = SelectRecipe[item].dataValues.foodProtein;
+                    additionalrecipeFat = SelectRecipe[item].dataValues.foodFat;
+                    additionalrecipeImage = SelectRecipe[item].dataValues.foodImage;
+                    additionalrecipeNatrium = SelectRecipe[item].dataValues.foodNatrium;
+
+                    additionalrecipe.push(additionalrecipeName);
+                    additionalrecipe.push(additionalrecipeEnergy);
+                    additionalrecipe.push(additionalrecipeCarbohydrate);
+                    additionalrecipe.push(additionalrecipeProtein);
+                    additionalrecipe.push(additionalrecipeFat);
+                    additionalrecipe.push(additionalrecipeImage);
+                    additionalrecipe.push(additionalrecipeNatrium);
+                }
+                console.log(additionalrecipe)
+                const SelectFood = await models.Food.findAll({
+
+                    where : {
+
+                        foodFat : 
+                        {[Op.and]:{
+                            [Op.gte]: need-3,
+                            [Op.lte]: need+3
+                        }}
+                    }
+                })
+                console.log(SelectFood)
+                console.log(SelectFood.dataValues)
+                for(let item in SelectFood){
+                    additionalfoodName = SelectFood[item].dataValues.foodName;
+                    additionalfoodEnergy = SelectFood[item].dataValues.foodEnergy;
+                    additionalfoodCarbohydrate = SelectFood[item].dataValues.foodCarbohydrate;
+                    additionalfoodProtein = SelectFood[item].dataValues.foodProtein;
+                    additionalfoodFat = SelectFood[item].dataValues.foodFat;
+                    additionalfoodNatrium = SelectFood[item].dataValues.foodNatrium;
+
+                    additionalfood.push(additionalfoodName);
+                    additionalfood.push(additionalfoodEnergy);
+                    additionalfood.push(additionalfoodCarbohydrate);
+                    additionalfood.push(additionalfoodProtein);
+                    additionalfood.push(additionalfoodFat);
+                    additionalfood.push(additionalfoodNatrium);
+                }
+                console.log(additionalfood)
+            }
+        }
+        recipeitem1 = [additionalrecipe[0], additionalrecipe[1], additionalrecipe[2], additionalrecipe[3], additionalrecipe[4], additionalrecipe[5], additionalrecipe[6]]
+        recipeitem2 = [additionalrecipe[7], additionalrecipe[8], additionalrecipe[9], additionalrecipe[10], additionalrecipe[11], additionalrecipe[12], additionalrecipe[13]]
+        recipeitem3 = [additionalrecipe[14], additionalrecipe[15], additionalrecipe[16], additionalrecipe[17], additionalrecipe[18], additionalrecipe[19], additionalrecipe[20]]
+        fooditem1 = [additionalfood[0], additionalfood[1], additionalfood[2], additionalfood[3], additionalfood[4], additionalfood[5]]
+        fooditem2 = [additionalfood[6], additionalfood[7], additionalfood[8], additionalfood[9], additionalfood[10], additionalfood[11]]
+        fooditem3 = [additionalfood[12], additionalfood[13], additionalfood[14], additionalfood[15], additionalfood[16], additionalfood[17]]
+        fooditem4 = [additionalfood[18], additionalfood[19], additionalfood[20], additionalfood[21], additionalfood[22], additionalfood[23]]
+        fooditem5 = [additionalfood[24], additionalfood[25], additionalfood[26], additionalfood[27], additionalfood[28], additionalfood[29]]
+
 
         const result = {
             BasicMetabolicRate :BasicMetabolicRate,
@@ -205,8 +494,20 @@ const dietanalysis = {
             percentProtein : percentProtein,
             percentFat : percentFat,
             BMI : BMI,
-            BMIrate : BMIrate
+            BMIrate : BMIrate,
             
+
+            TotalneedNutrition : TotalneedNutrition, 
+            NowNutrition : NowNutrition,
+            recipeitem1 : recipeitem1,
+            recipeitem2 : recipeitem2,
+            recipeitem3 : recipeitem3,
+
+            fooditem1 : fooditem1,
+            fooditem2 : fooditem2,
+            fooditem3 : fooditem3,
+            fooditem4 : fooditem4,
+            fooditem5 : fooditem5
         }
         
         res.send(result)
